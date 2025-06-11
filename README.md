@@ -65,3 +65,25 @@ The stepwise process of how the application will work is:
 - _NO CODE SHARING_. Every intern must have their own unique code and project style. Same rules as above for violation of this rule.
 - Any number of files can be created depending on the neccesity and use.
 - Do not clutter the main.py file, try and create multiple files for different logic sections (Eg: converter.py handle the conversion using gemini, filesystem_update.py creates and updated directories and files in filesystem).
+# PDF to Markdown Converter using Gemini API
+
+This project converts PDF content to Markdown using the Gemini AI API.
+
+## Features
+- Upload PDF file
+- Extract text
+- Convert to Markdown using Gemini
+- Save converted file
+
+## Setup Instructions
+
+```bash
+git clone https://github.com/yourusername/yourrepo.git
+cd yourrepo
+pip install -r requirements.txt
+python src/main.py
+GEMINI_API_KEY=your_api_key_here
+
+
+
+

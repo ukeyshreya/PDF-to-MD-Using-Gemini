@@ -17,3 +17,22 @@ def main():
         f.write(content)
 
     print(f"\n✅ Markdown file saved as: {output_file}")
+
+    import PyPDF2
+import os
+
+def extract_text_from_pdf(file_path):
+    with open(file_path, 'rb') as file:
+        reader = PyPDF2.PdfReader(file)
+        text = ''
+        for page in reader.pages:
+            text += page.extract_text() + '\n'
+    return text
+
+if __name__ == '__main__':
+    pdf_file = '../file-sample.pdf'  # use correct path if inside src
+    if os.path.exists(pdf_file):
+        text = extract_text_from_pdf(pdf_file)
+        print(text)
+    else:
+        print("❌ PDF file not found. Place 'file-sample.pdf' in project folder.")
