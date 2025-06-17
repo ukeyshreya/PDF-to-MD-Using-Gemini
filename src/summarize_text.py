@@ -10,3 +10,8 @@ if not api_key:
     raise ValueError("API key not found. Check your .env file.")
 
 print("✅ API key loaded!")
+from utils.file_ops import load_api_key, read_file, write_file
+
+api_key = load_api_key()
+text = read_file("example.txt")
+write_file("output.txt", text.upper())
