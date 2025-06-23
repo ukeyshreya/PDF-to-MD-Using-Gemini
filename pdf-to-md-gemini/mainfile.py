@@ -1,13 +1,10 @@
-print("Welcome to PDF to Markdown converter!")
-# PDF to Markdown Converter using Gemini API
+from pdf_reader import extract_text_from_pdf
 
-This is a command-line application that converts PDF files into Markdown format using Google's Gemini API.
+if __name__ == "__main__":
+    input_pdf = "pdfs/pdf_file1.pdf"
+    text = extract_text_from_pdf(input_pdf)
 
-## Features:
-- Select PDF file
-- Use Gemini AI to extract structured content
-- Save output as `.md` file
+    with open("output/sample_output.txt", "w") as f:
+        f.write(text)
 
-## How to Run:
-```bash
-python mainfile.py
+    print("PDF text extraction complete.")
