@@ -1,12 +1,12 @@
 from utils.file_ops import read_file, write_file
 
-# Read summarized text from summary.txt
-summary = read_file("summary.txt")  # Make sure this file exists
+# Step 1: Read from summary.txt
+summary = read_file("summary.txt")
 
-# Convert to Markdown format
-markdown_text = f"# Summary\n\n{summary}"
+# Step 2: Add Markdown formatting
+markdown = f"# Summary\n\n{summary}"
 
-# Write to summary.md file
-write_file("summary.md", markdown_text)
+# Step 3: Write to summary.md
+write_file("summary.md", markdown)
 
-print("✅ Markdown file created successfully!")
+print("✅ Converted summary.txt to summary.md")

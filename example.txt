@@ -1,0 +1,2 @@
+Python is a versatile programming language known for its simplicity and readability. It supports multiple programming paradigms and has a large ecosystem of libraries.
+Machine learning is a branch of artificial intelligence that focuses on the use of data and algorithms to imitate the way that humans learn. It is a method of data analysis that automates analytical model building.

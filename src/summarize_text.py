@@ -1,27 +1,17 @@
-from utils.file_ops import load_api_key, read_file, write_file
-import openai
+from transformers import pipeline
+from utils.file_ops import read_file, write_file
 
-# ✅ Load API Key
-api_key = load_api_key()
-print("✅ API key loaded!")
-
-# ✅ Load example text
+# ✅ Load the text
 text = read_file("example.txt")
+print("✅ Text loaded!")
 
-# ✅ Set API key for OpenAI
-openai.api_key = api_key
+# ✅ Initialize the summarizer
+summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
-# ✅ Make API call
-response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", "content": "Summarize the following text."},
-        {"role": "user", "content": text}
-    ]
-)
-
-summary = response["choices"][0]["message"]["content"]
+# ✅ Summarize
+summary_list = summarizer(text, max_length=150, min_length=40, do_sample=False)
+summary = summary_list[0]['summary_text']
 
 # ✅ Write summary to file
 write_file("summary.txt", summary)
-
+print("✅ Summary written to summary.txt")

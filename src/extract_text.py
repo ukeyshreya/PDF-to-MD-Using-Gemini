@@ -1,26 +1,36 @@
-import fitz  # PyMuPDF
-import os
+from utils.file_ops import load_api_key, read_file, write_file
+import openai
 
-# Step 1: Give your PDF file name here
-pdf_file = "sample.pdf1.pdf"  # 🔁 Replace with your actual PDF file name
+# ✅ Load API Key
+api_key = load_api_key()
+print("✅ API key loaded!")
 
-# Step 2: Open the PDF file
-if not os.path.exists(pdf_file):
-    print("❌ PDF file not found!")
-    exit()
+# ✅ Load example text
+text = read_file("example.txt")
 
-doc = fitz.open(pdf_file)
+# ✅ Set API key for OpenAI
+openai.api_key = api_key
 
-# Step 3: Extract text from each page
-all_text = ""
-for page in doc:
-    text = page.get_text()
-    all_text += text + "\n\n"
+# ✅ Make API call
+response = openai.ChatCompletion.create(
+    model="gpt-3.5-turbo",
+    messages=[
+        {"role": "system", "content": "Summarize the following text."},
+        {"role": "user", "content": text}
+    ]
+)
 
-doc.close()
+summary = response["choices"][0]["message"]["content"]
 
-# Step 4: Save the text to a file
-with open("extracted_text.txt", "w", encoding="utf-8") as f:
-    f.write(all_text)
+# ✅ Write summary to file
+write_file("summary.txt", summary)
+import openai
+from utils.file_ops import load_api_key, read_file, write_file
 
-print("✅ Text extracted and saved to extracted_text.txt")
+# ✅ Load the key
+api_key = load_api_key()
+openai.api_key = api_key  # <-- REQUIRED
+
+# Then continue with the rest
+print("✅ API key loaded!")
+
