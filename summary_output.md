@@ -1,3 +1,6 @@
+## Summary
+- Summary not available.
+
 # Lorem Ipsum Document
 
 ## Section 1

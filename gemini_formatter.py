@@ -25,3 +25,15 @@ Text:
 """
     response = model.generate_content(prompt)
     return response.text
+
+def generate_summary_with_gemini(text):
+    prompt = (
+        "Summarize the following text in 5-6 bullet points with a heading '## Summary':\n\n" + text
+    )
+    try:
+        model = genai.GenerativeModel("gemini-1.5-pro")
+        response = model.generate_content(prompt)
+        return response.text
+    except Exception as e:
+        print(f"[WARNING] Summary generation failed: {e}")
+        return "## Summary\n- Summary not available."
