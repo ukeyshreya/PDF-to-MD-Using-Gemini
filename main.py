@@ -1,3 +1,23 @@
+import sys
+import os
+
+# Step 1: Get file path from command-line
+if len(sys.argv) < 2:
+    print("[ERROR] Please provide the PDF file path as an argument.")
+    print("Usage: python main.py your_file.pdf")
+    exit()
+
+file_path = sys.argv[1]
+
+# Step 2: Validate file existence and extension
+if not os.path.exists(file_path):
+    print(f"[ERROR] File '{file_path}' does not exist.")
+    exit()
+
+if not file_path.lower().endswith(".pdf"):
+    print("[ERROR] Only PDF files are supported.")
+    exit()
+
 from pdf_reader import convert_pdf_to_text
 from markdown_converter import convert_text_to_markdown
 from gemini_formatter import enhance_markdown_with_gemini
