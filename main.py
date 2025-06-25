@@ -1,23 +1,48 @@
-from pdf_reader import extract_text_from_pdf
+from pdf_reader import convert_pdf_to_text
 from markdown_converter import convert_text_to_markdown
 from gemini_formatter import enhance_markdown_with_gemini
+import os
 
-if __name__ == "__main__":
-    input_pdf = "sample.pdf1.pdf"
-    text = extract_text_from_pdf(input_pdf)
+# ===== STEP 1: Input Validation =====
+file_path = "sample.pdf1.pdf"
+if not os.path.exists(file_path):
+    print("[ERROR] File does not exist.")
+    exit()
+if not file_path.endswith(".pdf"):
+    print("[ERROR] Only PDF files are supported.")
+    exit()
 
-    # Save plain extracted text
-    with open("extracted_text.txt", "w", encoding="utf-8") as f:
-        f.write(text)
+# ===== STEP 2: PDF to Text Conversion with Error Handling =====
+try:
+    text = convert_pdf_to_text(file_path)
+except FileNotFoundError:
+    print("[ERROR] PDF file not found.")
+    exit()
 
-    # Convert to basic markdown
-    markdown = convert_text_to_markdown(text)
-    with open("output.md", "w", encoding="utf-8") as f:
-        f.write(markdown)
+if not text.strip():
+    print("[ERROR] PDF appears empty. Please check the file.")
+    exit()
 
-    # Send to Gemini for better formatting
-    ai_markdown = enhance_markdown_with_gemini(text)
-    with open("ai_output.md", "w", encoding="utf-8") as f:
-        f.write(ai_markdown)
+# ===== STEP 3: Text to Markdown Conversion =====
+try:
+    markdown_text = convert_text_to_markdown(text)
+except Exception as e:
+    print(f"[ERROR] Markdown conversion failed: {e}")
+    exit()
 
-    print("✅ Gemini-enhanced Markdown saved to ai_output.md")
+# ===== STEP 4: Enhance with Gemini AI (Optional) =====
+try:
+    ai_markdown = enhance_markdown_with_gemini(markdown_text)
+except Exception as e:
+    print(f"[WARNING] Gemini enhancement failed: {e}")
+    ai_markdown = markdown_text  # Fallback
+
+# ===== STEP 5: Save Output =====
+output_file = "ai_output.md"
+if os.path.exists(output_file):
+    print("[INFO] Overwriting existing ai_output.md")
+
+with open(output_file, "w", encoding="utf-8") as f:
+    f.write(ai_markdown)
+
+print("✅ Gemini-enhanced Markdown saved to ai_output.md")
